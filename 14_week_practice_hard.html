@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h2 id="heading">
+        Проверка типа года
+    </h2>
+
+    <div>
+        <input type="number" id="yearnumber"> Укажите год
+    </div>
+
+    <div>
+        <button id="check" onclick="checkYear()">Проверка</button>
+    </div>
+    <script>
+        function checkYear() {
+            let yearnumber = document.getElementById('yearnumber').value;
+            if (yearnumber % 4 === 0) {
+                if (yearnumber % 100 === 0) {
+                    if (yearnumber % 400 === 0) {
+                        console.log("Год високосный")
+                    }
+                    console.log("Год не високосный")
+                } else {
+                    console.log("Год високосный")
+                }
+            }
+            else {
+            console.log("Год не високосный")
+        }
+
+        }
+
+        //тут я не смогла разобраться почему у меня при проверке 2000 года сразу выпадает и високосный и не високосный
+    </script>
+</body>
+
+</html>

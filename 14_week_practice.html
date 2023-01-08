@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h2 id="heading">
+        Cats
+    </h2>
+
+    <div>
+        <img id='images' src="1476173803-cats-wallpapers-3-199.jpg" style="width: 30%; height: 50%;">
+    </div>
+
+    <div>
+        <button id="previous" onclick="previous()">Previous</button>
+        <button id="next" onclick="next()">Next</button>
+    </div>
+    <script>
+        let image = document.getElementById('images');
+        function previous() {
+            image.src = "1476173803-cats-wallpapers-3-199.jpg";
+        }
+
+        function next() {
+            image.src = "kot_zevat_osheynik_udivlenie_36166_2560x1600.jpg";
+        }
+
+        function showText() {
+            console.log('Я учу JavaScript!');
+        } //1 задание
+
+        showText();
+    </script>
+</body>
+
+</html>
