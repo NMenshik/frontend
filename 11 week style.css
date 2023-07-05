@@ -1,0 +1,22 @@
+.product-cart {
+    height: 440px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  
+  .product-title {
+      text-decoration: none;
+  }
+  
+  .product-img {
+      height: 326px;
+      width: 263px;
+  }
+
+  #sale-btn {
+    height: 60px;
+    width: 225px;
+    color: black;
+  }
