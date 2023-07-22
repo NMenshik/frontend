@@ -39,6 +39,22 @@
       .input-comment {
         margin-right: 79px;
       }
+
+      #avatar-img {
+        width: 20%;
+        height: 35%;
+        margin-right: 10px;
+      }
+
+      #name-plus-img {
+        display: flex;
+        flex-direction: row;
+      }
+
+      #userName {
+        font-weight: 700;
+        color: rgb(88, 88, 247);
+      }
     </style>
   </head>
   <body>
@@ -58,46 +74,31 @@
     </div>
     <div class="output-comment">
       <div class="heading">Чат</div>
-      <img id="avatar-img" src="" />
-      <div id="userName"></div>
+
+      <div id="name-plus-img">
+        <img id="avatar-img" src="" />
+        <div id="userName"></div>
+      </div>
       <div id="edited-comment"></div>
     </div>
 
     <script>
-      let avatarLink = document.querySelector(".avatar-link").value;
-      console.log(avatarLink);
-      let userName = document.querySelector(".name").value;
-      let comment = document.querySelector(".comment-section").value;
-
       function commentOutput() {
-        //function putName() {
+        let avatarLink = document.querySelector(".avatar-link").value;
+        console.log(avatarLink);
+        let userName = document.querySelector(".name").value;
+        let comment = document.querySelector(".comment-section").value;
         let rightUserName1 = userName[0].toUpperCase();
         let rightUserName2 = userName.slice(1);
         let rightUserName3 = rightUserName2.toLowerCase();
         let finalRightUserName = rightUserName1 + rightUserName3;
 
-        function checkSpam() {
-          const wordReplace1 = comment.replace(/viagra/i, "***");
-          const wordReplace2 = comment.replace(/viagra/g, "***");
-          const wordReplace3 = comment.replace(/XXX/i, "***");
-          const wordReplace4 = comment.replace(/XXX/g, "***");
-          //comment.replace(
-            //array(
-              //(/viagra/i, "***"),
-              //(/viagra/g, "***"),
-              //(/XXX/i, "***"),
-              //(/XXX/g, "***")
-        }
-        console.log(checkSpam());
-        //function finalOutput() {
-          document.getElementById("userName").textContent = finalRightUserName;
-          document.getElementById("avatar-img").setAttribute(src, avatarLink);
-          document.getElementById("edited-comment").textContent = finalRightUserName;
-      
-        console.log(commentOutput());
-      }
+        const wordReplace = comment.replace(/viagra|XXX/gi, "***");
 
-      commentOutput();
+        document.getElementById("userName").textContent = finalRightUserName;
+        document.getElementById("avatar-img").setAttribute("src", avatarLink);
+        document.getElementById("edited-comment").textContent = wordReplace;
+      }
     </script>
   </body>
 </html>
