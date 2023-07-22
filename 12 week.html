@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Чат</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: row;
+      }
+      .heading {
+        font-weight: 700;
+        color: rgb(88, 88, 247);
+        font-size: larger;
+      }
+      .name,
+      .avatar-link {
+        height: 32px;
+        width: 249px;
+      }
+      .comment-section {
+        height: 32px;
+        width: 249px;
+        margin-bottom: 5px;
+      }
+      .sbm-btn {
+        height: 43px;
+        width: 164px;
+        background-color: rgb(53, 210, 238);
+        border-radius: 10px;
+        border-style: none;
+      }
+
+      .bold-font {
+        font-weight: bold;
+      }
+
+      .input-comment {
+        margin-right: 79px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input-comment">
+      <div class="heading">Оставьте ваш комментарий</div>
+      <div>Введите ваше <span class="bold-font">имя</span></div>
+      <input class="name" type="text" />
+      <div>Вставьте ссылку <span class="bold-font">вашего аватара</span></div>
+      <input class="avatar-link" type="url" />
+      <div>Оставьте комментарий</div>
+      <input class="comment-section" type="text" />
+      <div>
+        <button type="submit" class="sbm-btn" onclick="commentOutput()">
+          Отправить
+        </button>
+      </div>
+    </div>
+    <div class="output-comment">
+      <div class="heading">Чат</div>
+      <img id="avatar-img" src="" />
+      <div id="userName"></div>
+      <div id="edited-comment"></div>
+    </div>
+
+    <script>
+      let avatarLink = document.querySelector(".avatar-link").value;
+      console.log(avatarLink);
+      let userName = document.querySelector(".name").value;
+      let comment = document.querySelector(".comment-section").value;
+
+      function commentOutput() {
+        //function putName() {
+        let rightUserName1 = userName[0].toUpperCase();
+        let rightUserName2 = userName.slice(1);
+        let rightUserName3 = rightUserName2.toLowerCase();
+        let finalRightUserName = rightUserName1 + rightUserName3;
+
+        function checkSpam() {
+          const wordReplace1 = comment.replace(/viagra/i, "***");
+          const wordReplace2 = comment.replace(/viagra/g, "***");
+          const wordReplace3 = comment.replace(/XXX/i, "***");
+          const wordReplace4 = comment.replace(/XXX/g, "***");
+          //comment.replace(
+            //array(
+              //(/viagra/i, "***"),
+              //(/viagra/g, "***"),
+              //(/XXX/i, "***"),
+              //(/XXX/g, "***")
+        }
+        console.log(checkSpam());
+        //function finalOutput() {
+          document.getElementById("userName").textContent = finalRightUserName;
+          document.getElementById("avatar-img").setAttribute(src, avatarLink);
+          document.getElementById("edited-comment").textContent = finalRightUserName;
+      
+        console.log(commentOutput());
+      }
+
+      commentOutput();
+    </script>
+  </body>
+</html>
