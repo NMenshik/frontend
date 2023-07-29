@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Чат</title>
+    <style>
+      .heading {
+        font-weight: 700;
+        color: rgb(88, 88, 247);
+        font-size: larger;
+      }
+      .name,
+      .avatar-link {
+        height: 32px;
+        width: 249px;
+      }
+      .comment-section {
+        height: 32px;
+        width: 249px;
+        margin-bottom: 5px;
+      }
+      .sbm-btn {
+        height: 43px;
+        width: 164px;
+        background-color: rgb(53, 210, 238);
+        border-radius: 10px;
+        border-style: none;
+      }
+
+      .bold-font {
+        font-weight: bold;
+      }
+
+      .input-comment {
+        width: 300px;
+        margin-right: 79px;
+      }
+
+      #avatar-img {
+        width: 20%;
+        height: 35%;
+        margin-right: 10px;
+      }
+
+      body,
+      #name-plus-img {
+        display: flex;
+        flex-direction: row;
+      }
+
+      #userName {
+        font-weight: 700;
+        color: rgb(88, 88, 247);
+      }
+
+      #show-name {
+        margin-top: 9px;
+        margin-bottom: 9px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="input-comment">
+      <div class="heading">Оставьте ваш комментарий</div>
+      <form id="show-name">
+        <label for="radio">Показывать ваше имя?</label>
+        <input type="radio" checked="checked" id="checkYes" name="radio" /> Да
+        <input type="radio" id="checkNo" name="radio" /> Нет
+      </form>
+      <div id="name-input">
+        <div>Введите ваше <span class="bold-font">имя</span></div>
+        <input class="name" type="text" />
+      </div>
+      <div>Вставьте ссылку <span class="bold-font">вашего аватара</span></div>
+      <input class="avatar-link" type="url" />
+      <div>Оставьте комментарий</div>
+      <input class="comment-section" type="text" />
+      <div>
+        <button type="submit" class="sbm-btn" onclick="commentOutput()">
+          Отправить
+        </button>
+      </div>
+    </div>
+    <div class="output-comment">
+      <div class="heading">Чат</div>
+
+      <div id="name-plus-img">
+        <img id="avatar-img" src="" />
+        <div id="userName"></div>
+        <div id="sbm-time"></div>
+      </div>
+      <div id="edited-comment"></div>
+    </div>
+
+    <script>
+      function showName() {
+        let checkYes = document.getElementById("checkYes").value;
+        let checkNo = document.getElementById("checkNo").value;
+        console.log(checkNo);
+
+        if (checkNo === true) {
+          document.getElementById("name-input").style.display = "none";
+        }
+      }
+      showName();
+
+      function commentOutput() {
+        let avatarLink = document.querySelector(".avatar-link").value;
+        console.log(avatarLink);
+        let userName = document.querySelector(".name").value;
+        let comment = document.querySelector(".comment-section").value;
+        let rightUserName1 = userName[0].toUpperCase();
+        let rightUserName2 = userName.slice(1);
+        let rightUserName3 = rightUserName2.toLowerCase();
+        let finalRightUserName = rightUserName1 + rightUserName3;
+
+        const wordReplace = comment.replace(/viagra|XXX/gi, "***");
+
+        document.getElementById("userName").textContent = finalRightUserName;
+
+        if (avatarLink == false) {
+          document.getElementById("avatar-img").setAttribute("src", 'assets\1659592293_1.jpg'|'assets\1659592333_21.jpg'|'assets\1659592374_26.jpg'|'assets\1659592393_27.jpg'|'assets\1659592397_25.jpg');
+        }
+        else {
+            document.getElementById("avatar-img").setAttribute("src", avatarLink);
+        }
+        //document.getElementById("avatar-img").setAttribute("src", avatarLink);
+        document.getElementById("edited-comment").textContent = wordReplace;
+        let currentdate = new Date();
+        let dateTime = currentdate.getDate() + "."
+                + (currentdate.getMonth()+1)  + "." 
+                + currentdate.getFullYear() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+
+        if (currentdate.getMinutes().length === 1) {
+            dateTime = currentdate.getDate() + "."
+                + (currentdate.getMonth()+1)  + "." 
+                + currentdate.getFullYear() + " "  
+                + currentdate.getHours() + ":0"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+        }
+        document.getElementById("sbm-time").textContent = dateTime;
+
+        if (userName == false) {
+            finalRightUserName = 'username';
+        }
+
+        
+      }
+    </script>
+  </body>
+</html>
