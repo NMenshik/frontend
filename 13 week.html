@@ -20,7 +20,7 @@
         width: 249px;
         margin-bottom: 5px;
       }
-      .sbm-btn {
+      #sbm-btn {
         height: 43px;
         width: 164px;
         background-color: rgb(53, 210, 238);
@@ -61,12 +61,14 @@
     </style>
   </head>
   <body>
+    <form id="commentForm">
     <div class="input-comment">
       <div class="heading">Оставьте ваш комментарий</div>
       <form id="show-name">
         <label for="radio">Показывать ваше имя?</label>
         <input type="radio" checked="checked" id="checkYes" name="radio" /> Да
-        <input type="radio" id="checkNo" name="radio" /> Нет
+        <input type="radio" id="checkNo" name="radio" onclick="showName()" />
+        Нет
       </form>
       <div id="name-input">
         <div>Введите ваше <span class="bold-font">имя</span></div>
@@ -77,16 +79,17 @@
       <div>Оставьте комментарий</div>
       <input class="comment-section" type="text" />
       <div>
-        <button type="submit" class="sbm-btn" onclick="commentOutput()">
+        <button type="submit" id="sbm-btn" >
           Отправить
         </button>
       </div>
     </div>
+    </form>
     <div class="output-comment">
       <div class="heading">Чат</div>
 
       <div id="name-plus-img">
-        <img id="avatar-img" src="" />
+       <div id="avatar-img"> </div>
         <div id="userName"></div>
         <div id="sbm-time"></div>
       </div>
@@ -94,63 +97,75 @@
     </div>
 
     <script>
-      function showName() {
-        let checkYes = document.getElementById("checkYes").value;
-        let checkNo = document.getElementById("checkNo").value;
-        console.log(checkNo);
+      //Берем элементы из разметки
+      const commentForm = document.querySelector("#commentForm");
+      const avatarLinkInput = document.querySelector(".avatar-link");
+      const userNameInput = document.querySelector(".name");
+      const commentSection = document.querySelector(".comment-section");
+      const avatarImg = document.querySelector("#avatar-img");
+      const userNameElement = document.querySelector("#userName");
+      const editedCommentElement = document.querySelector("#edited-comment");
 
-        if (checkNo === true) {
-          document.getElementById("name-input").style.display = "none";
-        }
-      }
-      showName();
+      //Функция для показа поля ввода имени, если выбран вариант да
+      document.querySelector('#checkYes').addEventListener('click', (showInput)=> {
+        document.getElementById("name-input").style.display = "block";
+      });
 
-      function commentOutput() {
-        let avatarLink = document.querySelector(".avatar-link").value;
-        console.log(avatarLink);
-        let userName = document.querySelector(".name").value;
-        let comment = document.querySelector(".comment-section").value;
-        let rightUserName1 = userName[0].toUpperCase();
-        let rightUserName2 = userName.slice(1);
-        let rightUserName3 = rightUserName2.toLowerCase();
-        let finalRightUserName = rightUserName1 + rightUserName3;
+      //Функция для скрытия поля ввода имени, если выбран вариант нет 
+      document.querySelector('#checkNo').addEventListener('click', (hideInput)=> {
+        document.getElementById("name-input").style.display = "none";
+      });
 
+      //Функция для обработки отправки комментария
+      function commentOutput(e) {
+        e.preventDefault(); //Предотвращаем перезагрузку страницы по умолчанию
+
+        //Получаем значение полей из ввода
+
+        let avatarLink = avatarLinkInput.value;
+        let userName = userNameInput.value;
+        let comment = commentSection.value;
+
+        //Разделяем имя на отдельные слова
+        let nameParts = userName.split(" ");
+
+        //Преобразуем каждое слово так, чтобы оно начиналось с заглавной буквы, а остальные были строчные
+        let finalNameParts = nameParts.map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        });
+
+        //Объединяем слова обратно с правильным имененм пользователя
+        let finalRightUserName = finalNameParts.join(" ");
+
+        //Заменяем запрещенные слова
         const wordReplace = comment.replace(/viagra|XXX/gi, "***");
 
-        document.getElementById("userName").textContent = finalRightUserName;
+        //Устанавливаем текст элемента для имени пользователя
+        userNameElement.textContent = finalRightUserName;
 
-        if (avatarLink == false) {
-          document.getElementById("avatar-img").setAttribute("src", 'assets\1659592293_1.jpg'|'assets\1659592333_21.jpg'|'assets\1659592374_26.jpg'|'assets\1659592393_27.jpg'|'assets\1659592397_25.jpg');
-        }
-        else {
-            document.getElementById("avatar-img").setAttribute("src", avatarLink);
-        }
-        //document.getElementById("avatar-img").setAttribute("src", avatarLink);
-        document.getElementById("edited-comment").textContent = wordReplace;
-        let currentdate = new Date();
-        let dateTime = currentdate.getDate() + "."
-                + (currentdate.getMonth()+1)  + "." 
-                + currentdate.getFullYear() + " "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
-
-        if (currentdate.getMinutes().length === 1) {
-            dateTime = currentdate.getDate() + "."
-                + (currentdate.getMonth()+1)  + "." 
-                + currentdate.getFullYear() + " "  
-                + currentdate.getHours() + ":0"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
-        }
-        document.getElementById("sbm-time").textContent = dateTime;
-
-        if (userName == false) {
-            finalRightUserName = 'username';
-        }
-
+        //Попытка добавить тег img через appendChild
+        //const image = document.createElement('img');
+       // image.src = avatarLinkInput;
+        //avatarImg.appendChild(image);
         
+
+        //Добавляем тег img в div
+        console.log(avatarImg.innerHTML);
+        avatarImg.innerHTML = '<img i=\'avatar-img\' >';
+
+        //Устанавливаем источник изображения для аватара
+        avatarImg.setAttribute("src", avatarLinkInput);
+
+        //Устанавливаем текст элемента для отредактированного комментария
+        editedCommentElement.textContent = wordReplace;
       }
+
+      //Добавляем обработчик события на форму комментрия для вызова функции commentOutput при отправке формы
+      commentForm.addEventListener("submit", commentOutput);
+
+      
+
+    
     </script>
   </body>
 </html>

@@ -1,0 +1,72 @@
+  function showName() {
+        // let checkYes = document.getElementById("checkYes").value;
+        //let checkNo = document.getElementById("checkNo").value;
+        //console.log(checkNo);
+
+        // if (checkNo === true) {
+        document.getElementById("name-input").style.display = "none";
+      }
+      //showName();
+
+      function commentOutput() {
+        let avatarLink = document.querySelector(".avatar-link").value;
+        console.log(avatarLink);
+        let userName = document.querySelector(".name").value;
+        let comment = document.querySelector(".comment-section").value;
+        let rightUserName1 = userName[0].toUpperCase();
+        let rightUserName2 = userName.slice(1);
+        let rightUserName3 = rightUserName2.toLowerCase();
+        let finalRightUserName = rightUserName1 + rightUserName3;
+
+        document.getElementById("userName").textContent = finalRightUserName;
+
+        if (avatarLink == false) {
+          document
+            .getElementById("avatar-img")
+            .setAttribute(
+              "src",
+              "assets\1659592293_1.jpg" |
+                "assets\1659592333_21.jpg" |
+                "assets\1659592374_26.jpg" |
+                "assets\1659592393_27.jpg" |
+                "assets\1659592397_25.jpg"
+            );
+        } else {
+          document.getElementById("avatar-img").setAttribute("src", avatarLink);
+        }
+        //document.getElementById("avatar-img").setAttribute("src", avatarLink);
+        document.getElementById("edited-comment").textContent = wordReplace;
+        let currentdate = new Date();
+        let dateTime =
+          currentdate.getDate() +
+          "." +
+          (currentdate.getMonth() + 1) +
+          "." +
+          currentdate.getFullYear() +
+          " " +
+          currentdate.getHours() +
+          ":" +
+          currentdate.getMinutes() +
+          ":" +
+          currentdate.getSeconds();
+
+        if (currentdate.getMinutes().length === 1) {
+          dateTime =
+            currentdate.getDate() +
+            "." +
+            (currentdate.getMonth() + 1) +
+            "." +
+            currentdate.getFullYear() +
+            " " +
+            currentdate.getHours() +
+            ":0" +
+            currentdate.getMinutes() +
+            ":" +
+            currentdate.getSeconds();
+        }
+        document.getElementById("sbm-time").textContent = dateTime;
+
+        if (userName == false) {
+          finalRightUserName = "username";
+        }
+      }
