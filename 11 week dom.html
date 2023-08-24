@@ -64,42 +64,30 @@
     </div>
 
     <div>
-      <button id="sale-btn" onclick="countPrice">Использовать купон на 20%</button>
+      <button id="sale-btn">Использовать купон на 20%</button>
     </div>
 
     <div>Итоговая стоимость: <span id="output"></span> Р</div>
 
     <script>
+      let btn = document.querySelector("#sale-btn");
+      btn.addEventListener("click", (countPrice) => {
+        let price1 = document.querySelector("#price1").textContent;
+        let price2 = document.querySelector("#price2").textContent;
+        let price3 = document.querySelector("#price3").textContent;
+        let price4 = document.querySelector("#price4").textContent;
+        console.log(price1);
+        // И надо сделать результирующую переменную summ
+        let summ = +price1 + +price2 + +price3 + +price4;
+        let output = document.querySelector("#output");
+        //output.innerHTML = +price1 + +price2 + +price3 + +price4;
+        price1.textContent = +price1 * 0.8;
+        price2.textContent = +price2 * 0.8;
+        price3.textContent = +price3 * 0.8;
+        price4.textContent = +price4 * 0.8;
+        output.textContent = summ * 0.8;
+      });
 
-      // let price1 = document.getElementById('price1').textContent;
-      // let price1 = document.querySelector('#price1').innerHTML
-      let price1 = document.querySelector("#price1").textContent;
-      let price2 = document.querySelector("#price1").textContent;
-      let price3 = document.querySelector("#price1").textContent;
-      let price4 = document.querySelector("#price1").textContent;
-      console.log(price1);
-      // И надо сделать результирующую переменную summ
-      let summ = +price1 + +price2 + +price3 + +price4;
-      let output = document.querySelector("#output");
-      //output.innerHTML = +price1 + +price2 + +price3 + +price4;
-
-      let btn = document.querySelector("sale-btn");
-
-      function countPrice() {
-        price1.innerHTML = +price1 * 0.8;
-        price2.innerHTML = +price2 * 0.8;
-        price3.innerHTML = +price3 * 0.8;
-        price4.innerHTML = +price4 * 0.8;
-        output.innerHTML = summ * 0.8;
-
-      };
-
-      countPrice();
-      //console.log (countPrice);
-      //btn.addEventListener("click", countPrice)
-        
-
-      //function countPrice;
     </script>
   </body>
 </html>
