@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-do list</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      #to-do-list {
+        width: 312px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .task-input {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+
+      #add-task-btn {
+        margin-left: 5px;
+        background-color: aquamarine;
+        border: none;
+        border-radius: 4px;
+        width: 138px;
+        height: 34px;
+      }
+
+      #task-output {
+        list-style-type: none;
+      }
+
+      .checked {
+         text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="to-do-list">
+      <h1 id="heading">To-do list</h1>
+      <div class="task-input">
+        <input type="text" placeholder="Введите задачу" id="task" name="text" />
+        <button id="add-task-btn">Добавить задачу</button>
+      </div>
+
+      <ul id="task-output"></ul>
+    </main>
+
+    <script>
+      let button = document.querySelector("#add-task-btn"); //переменная для кнопки
+      let taskOtput = document.querySelector("#task-output"); //переменная для ul
+
+      function createTask(e) {
+        e.preventDefault(); //Предотвращаем перезагрузку страницы по умолчанию
+        let input = document.querySelector("#task"); //переменная для поля ввода
+        const newLI = document.createElement("li"); //добавление li
+        newLI.textContent = input.value; //помещаем значение из поля ввода в li
+        taskOtput.append(newLI); //помещаем новое задание в конец списка
+        newLI.setAttribute('class', 'newTask'); //добавляем класс к li
+        input.value = ''; //очищаем поле ввода после нажатия кнопки "Добавить"
+      }
+      button.addEventListener("click", createTask); //вешаем обработчик на кнопку с функцией
+
+      /*функция, которая срабатывает 
+        при нажатии на элемент списка и перечеркивает этот элемент*/
+        taskOtput.addEventListener("click", function (evt) { 
+        if (evt.target.tagName === "LI") {
+          // Код, который будет выполнен при клике на элемент <li>
+          evt.target.classList.toggle("checked"); // переключение класса
+        }
+      });
+    </script>
+  </body>
+</html>
