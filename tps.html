@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+      body {
+        font-family: "Roboto", sans-serif;
+      }
+
+      #container {
+        margin: 38px;
+      }
+
+      .container--tabs {
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .tab {
+          min-height: 2em;
+          padding: 1em;
+          box-sizing: border-box;
+          width: 80%;
+          margin: 5px;
+          text-align: center;
+          cursor: pointer;
+          background-color: black;
+          color: rgb(215, 207, 207);
+          transition: background-color 0.25s;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.25);
+            transition: background-color 0.25s;
+            color: white;
+          }
+        }
+
+        .tabs--active {
+          background-color: #b0abab;
+          color: black;
+          pointer-events: none;
+        }
+      }
+
+      .content {
+        display: none;
+        padding: 3em;
+      }
+
+      .content--active {
+        display: block;
+      }
+
+      h1 {
+        margin-bottom: 0.5em;
+        font-weight: 700;
+      }
+
+      p {
+        font-weight: 300;
+      }
+
+      /* Кнопка выпадающего списка */
+      .dropbtn {
+        background-color: #3498db;
+        color: white;
+        padding: 16px;
+        margin-left: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Кнопка выпадающего меню при наведении и фокусировке */
+      .dropbtn:hover,
+      .dropbtn:focus {
+        background-color: #2980b9;
+      }
+
+      /* Контейнер <div> - необходим для размещения выпадающего содержимого */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      /* Выпадающее содержимое (скрыто по умолчанию) */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      /* Ссылки внутри выпадающего списка */
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+      }
+
+      /* Изменение цвета выпадающих ссылок при наведении курсора */
+      .dropdown-content a:hover {
+        background-color: #ddd;
+      }
+
+      /* Показать выпадающее меню (используйте JS, чтобы добавить этот класс .dropdown-content содержимого, когда пользователь нажимает на кнопку выпадающего списка) */
+      .show {
+        display: block;
+      }
+
+      .date-button {
+        display: flex;
+        flex-direction: row;
+      }
+
+      #btn-name {
+        padding-top: 14px;
+      }
+    </style>
+  </head>
+  <body id="container">
+    <nav>
+      <ul class="container--tabs">
+        <li class="tab tabs--active">Подгрузка новых отчетов</li>
+        <li class="tab">Проверка данных</li>
+        <li class="tab">Технические проверки</li>
+      </ul>
+    </nav>
+
+    <section>
+      <div class="container--content">
+        <div class="content content--active">
+          <div class="date-button">
+            <div id="btn-name">
+              Дата:
+            </div>
+
+            <div class="dropdown">
+              <button onclick="myFunction()" class="dropbtn">23.08.2023</button>
+
+              <div id="myDropdown" class="dropdown-content">
+                <p id="option1">Время1</p>
+                <p id="option2">Время1</p>
+                <p id="option3">Время2</p>
+                <p id="option4">Время2</p>
+                <p id="option5">Время2</p>
+                <p id="option6">Время2</p>
+                <p id="option7">Время2</p>
+                <p id="option8">Время2</p>
+                <p id="option9">Время2</p>
+                <p id="option10">Время2</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+            <select> Дата:
+                <option>Что-то</option>
+            </select>
+        </div>
+        <div class="content">
+          <h1>This is tab 2</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
+            doloribus necessitatibus possimus. Sapiente aspernatur neque atque
+            in eum tenetur id!
+          </p>
+        </div>
+        <div class="content">
+          <h1>This is tab 3</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam
+            esse voluptas minus autem, veniam dolor, debitis consequuntur
+            dignissimos libero quibusdam consequatur. Enim, pariatur deserunt.
+            Officiis!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const tabs = document.querySelectorAll(".tab");
+      const contents = document.querySelectorAll(".content");
+
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener("click", () => {
+          for (let j = 0; j < contents.length; j++) {
+            contents[j].classList.remove("content--active");
+          }
+          for (let jj = 0; jj < tabs.length; jj++) {
+            tabs[jj].classList.remove("tabs--active");
+          }
+          contents[i].classList.add("content--active");
+          tabs[i].classList.add("tabs--active");
+        });
+      }
+
+      /* Когда пользователь нажимает на кнопку,
+переключение между скрытием и отображением раскрывающегося содержимого */
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+      // Закройте выпадающее меню, если пользователь щелкает за его пределами
+      window.onclick = function (event) {
+        if (!event.target.matches(".dropbtn")) {
+          let dropdowns = document.getElementsByClassName("dropdown-content");
+          let i;
+          for (i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+
+      let currentdate = new Date();
+        let dateTime =
+          (currentdate.getDate()-1 )+
+          "." +
+          (currentdate.getMonth() + 1) +
+          "." +
+          currentdate.getFullYear();
+
+        function currentDate() {
+            let dateButton = document.querySelector('.dropbtn');
+            dateButton.textContent = dateTime;
+        }
+/* let today = (currentdate.getDate()-1 );
+for (let ) {
+if 
+}
+*/
+        currentDate();
+      console.log(dateTime);
+    </script>
+  </body>
+</html>

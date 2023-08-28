@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        color: black;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+        list-style: none;
+      }
+
+      .container {
+        width: 90%;
+        margin: 50px auto;
+        position: relative;
+      }
+
+      .container .tab-container {
+        width: 100%;
+        background-color: #eee;
+        overflow: hidden;
+        border: 1px solid #cfcfcf;
+      }
+      .container .tab-container .tab {
+        float: left;
+        padding: 18px;
+        font-size: 17px;
+        cursor: pointer;
+        background-color: inherit;
+      }
+      .container .tab-container .tab:hover {
+        background-color: #e1e1e1;
+      }
+      .container .tab-container .tab.active {
+        background-color: #c5c5c5;
+      }
+
+      .container .tab-content {
+        width: 100%;
+        padding: 40px 20px;
+        border: 1px solid #cfcfcf;
+        border-top: 0;
+        position: absolute;
+        display: none;
+      }
+      .container .tab-content h1 {
+        font-weight: 400;
+        font-size: 27px;
+        margin-bottom: 20px;
+        animation: fading 1s;
+      }
+      .container .tab-content p {
+        color: #555;
+        font-size: 16px;
+        font-weight: 400;
+        animation: fading 2s;
+      }
+      @keyframes fading {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="tab-container">
+        <button class="tab" onclick="city(event, 'London')">London</button>
+        <button class="tab" onclick="city(event, 'Paris')">Paris</button>
+        <button class="tab" onclick="city(event, 'Tokyo')">Tokyo</button>
+      </div>
+      <div class="tab-content" id="London">
+        <h1>London</h1>
+        <p>London is the capital city of England.</p>
+      </div>
+      <div class="tab-content" id="Paris">
+        <h1>Paris</h1>
+        <p>Paris is the capital of France.</p>
+      </div>
+      <div class="tab-content" id="Tokyo">
+        <h1>Tokyo</h1>
+        <p>Tokyo is the capital of Japan.</p>
+      </div>
+    </div>
+
+    <script>
+      var tabButton = document.getElementsByClassName("tab"),
+        tabContent = document.getElementsByClassName("tab-content");
+
+      tabButton[0].classList.add("active");
+      tabContent[0].style.display = "block";
+
+      function city(e, x) {
+        var i;
+        for (i = 0; i < tabButton.length; i++) {
+          tabContent[i].style.display = "none";
+          tabButton[i].classList.remove("active");
+        }
+        document.getElementById(x).style.display = "block";
+        e.currentTarget.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
