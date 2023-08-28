@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 312px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .input {
+        margin: 25px;
+      }
+
+      .input-name {
+        font-weight: 700;
+        font-size: larger;
+      }
+
+      .input-boxes {
+        border-style: groove;
+        border-color: blue;
+        width: 168px;
+        height: 38px;
+      }
+
+      #count-button {
+        width: 171px;
+        height: 46px;
+        background-color: blueviolet;
+        border: none;
+        border-radius: 4px;
+      }
+
+      #bmi-result {
+        margin-top: 19px;
+        font-weight: 600;
+        font-size: larger;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Калькулятор ИМТ</h1>
+    <div class="input">
+      <p class="input-name">Вес (кг):</p>
+      <input type="number" placeholder="Введите ваш вес" class="input-boxes" id="weight"/>
+    </div>
+
+    <div class="input">
+      <p class="input-name">Рост (см):</p>
+      <input type="number" placeholder="Введите ваш рост" class="input-boxes" id="height"/>
+    </div>
+
+    <div><button id="count-button">Расчитать ИМТ</button></div>
+
+    <div id="bmi-result"></div>
+
+    <script>
+        const CountBMI = document.querySelector('#count-button')
+        function calculateBMI() {
+            const personWeight = document.querySelector('#weight'); //достаем инпут веса
+            const personHeight = document.querySelector('#height'); //достаем инпут роста
+            let qrHeight = Math.pow((personHeight.value / 100), 2); //возводим в степень рост, рост для имт считается в метрах, а не в см, поэтому рост делю на 100, иначе впереди несколько нулей получается
+            let BMI = personWeight.value / qrHeight; //высчитываем имт делением веса на квадрат роста
+            const finalBMI = BMI.toFixed(2); //убрала округление, так как после запятые были просто 2 нуля
+
+            const BMIresult = document.querySelector('#bmi-result'); //достаем див, где должен выводиться результат
+            BMIresult.textContent = `Индекс массы тела(ИМТ) ${finalBMI}`; //помещаем формулировку результата
+
+            personWeight.value = ''; //очищаем поля ввода после нажатия на кнопку
+            personHeight.value = '';
+            
+        }
+
+        CountBMI.addEventListener('click', calculateBMI); //добавляем обработчик
+    </script>
+  </body>
+</html>
