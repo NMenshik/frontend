@@ -359,7 +359,7 @@ const buttonTwentySeven = document.querySelector('.b-27');
 const resultTwentySeven = document.querySelector('#resultTwentySeven');
 
 const makeTwentySeven = () => {
-	resultTwentySeven.textContent = Math.random(); //Я так и не поняла как задать диапозон без функций, если этот метод действует только до 1
+	resultTwentySeven.textContent = Math.round(Math.random()*101); //Я так и не поняла как задать диапозон без функций и как в таком случае сделать с 50
 };
 
 buttonTwentySeven.addEventListener('click', makeTwentySeven);
