@@ -70,3 +70,207 @@
           finalRightUserName = "username";
         }
       }
+
+      <div class="name-plus-img">
+      <div class="avatar-img"></div>
+      <div class="userName"></div>
+      <div class="sbm-time"></div>
+    </div>
+    <div class="edited-comment"></div>
+
+      <script>
+    //Берем элементы из разметки
+    const commentForm = document.querySelector("#commentForm");
+    const avatarLinkInput = document.querySelector(".avatar-link");
+    const userNameInput = document.querySelector(".name");
+    const commentSection = document.querySelector(".comment-section");
+    let avatarImg = document.querySelector(".avatar-img");
+    let userNameElement = document.querySelector(".userName");
+    const editedCommentElement = document.querySelector(".edited-comment");
+    const submitTimeSection = document.querySelector(".sbm-time");
+    const validationText = document.querySelector("#validation-text");
+    let output = document.querySelector('.name-plus-img');
+    let outputtedComment =  document.querySelector('.output-comment');
+
+    //let date = new Date().toUTCString();
+    //console.log(date); - тут узнала, что могла бы и не делать целую простыню ниже по форматированию времени
+    
+
+    //Функция для показа поля ввода имени, если выбран вариант да
+    document.querySelector('#checkYes').addEventListener('click', (showInput) => {
+      document.getElementById("name-input").style.display = "block";
+    });
+
+    //Функция для скрытия поля ввода имени, если выбран вариант нет
+    document.querySelector('#checkNo').addEventListener('click', (hideInput) => {
+      document.getElementById("name-input").style.display = "none";
+    });
+
+    //Функция для обработки отправки комментария
+    function commentOutput(e) {
+      e.preventDefault(); //Предотвращаем перезагрузку страницы по умолчанию
+
+      //Получаем значение полей из ввода
+      let avatarLink = avatarLinkInput.value;
+      let comment = commentSection.value;
+
+      if (commentSection.value === '') {
+        validationText.textContent = "Необходимо ввести комментарий!";
+        submitTime = '';
+        userNameElement.textContent = '';
+        avatarImg = '';
+      } else {
+        validationText.textContent = '';
+      }
+
+      let outputtedImg = document.createElement('img');
+      avatarImg.append(outputtedImg);
+
+      if (avatarLink === '') {
+
+        const randomNumber = Math.round(Math.random()*5);
+
+        switch(randomNumber) {
+          case 1:
+            outputtedImg.setAttribute('src', 'https://zamanilka.ru/wp-content/uploads/2023/09/ava-leopard-220923-1-1024x1024.jpg');
+            break;
+          case 2:
+            outputtedImg.setAttribute('src', 'https://zamanilka.ru/wp-content/uploads/2023/09/ava-medved-220923-1-1024x1024.jpg') ;
+            break;
+          case 3:
+            outputtedImg.setAttribute('src', 'https://zamanilka.ru/wp-content/uploads/2023/09/ava-lion-020923-2-1024x1024.jpg'); 
+            break;
+          case 4:
+            outputtedImg.setAttribute('src', 'https://zamanilka.ru/wp-content/uploads/2023/07/ava-dog-160723-1-1024x1024.jpg');
+            break;
+          case 5:
+            outputtedImg.setAttribute('src', 'https://zamanilka.ru/wp-content/uploads/2023/05/ava-cat-180523-2-4k-1024x1024.jpg' );
+            break;
+        }
+      }
+      else {
+         outputtedImg.setAttribute('src', avatarLink);
+      }
+
+      if (userNameInput.value === '') { 
+        userNameElement.textContent = 'Username';
+      } else {
+        //Разделяем имя на отдельные слова
+      let nameParts = userNameInput.value.split(" ");
+
+      //Преобразуем каждое слово так, чтобы оно начиналось с заглавной буквы, а остальные были строчные
+      let finalNameParts = nameParts.map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      });
+
+      //Объединяем слова обратно с правильным имененм пользователя
+      let finalRightUserName = finalNameParts.join(" ");
+
+      //Устанавливаем текст элемента для имени пользователя
+      userNameElement.textContent = finalRightUserName;
+      }
+
+      //Заменяем запрещенные слова
+      const wordReplace = comment.replace(/viagra|XXX/gi, "***");
+
+      //Устанавливаем текст элемента для отредактированного комментария
+      editedCommentElement.textContent = wordReplace;
+
+      
+      //Условие для отображения корректного времени отправления комментария
+      let currentDate = new Date();
+      let dayNumber = currentDate.getDay();
+      console.log(dayNumber);
+      let weekDayName =
+        (dayNumber === 0) ? 'Sun' :
+        (dayNumber === 1) ? 'Mon' :
+        (dayNumber === 2) ? 'Tue' :
+        (dayNumber === 3) ? 'Wed' :
+        (dayNumber === 4) ? 'Thu' :
+        (dayNumber === 5) ? 'Fr' :
+        (dayNumber === 6) ? 'Sat' : false;
+
+
+      let currentDay = currentDate.getDate();
+      console.log(currentDay);
+
+      let monthNumber = currentDate.getMonth();
+      let monthName =
+        (monthNumber === 0) ? 'Jan' :
+        (monthNumber === 1) ? 'Feb' :
+        (monthNumber === 2) ? 'March' :
+        (monthNumber === 3) ? 'April' :
+        (monthNumber === 4) ? 'May' :
+        (monthNumber === 5) ? 'Jun' :
+        (monthNumber === 6) ? 'Jul' :
+        (monthNumber === 7) ? 'Aug' :
+        (monthNumber === 8) ? 'Sep' :
+        (monthNumber === 9) ? 'Oct' :
+        (monthNumber === 10) ? 'Nov' :
+        (monthNumber === 11) ? 'Dec' : false;
+
+      let currentYear = currentDate.getFullYear();
+      let currentHour = currentDate.getHours();
+      let currentMinutes = currentDate.getMinutes();
+      let currentSeconds = currentDate.getSeconds();
+
+      let submitTime;
+      if (currentHour < 10 && currentMinutes > 10 && currentSeconds > 10) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at 0' + currentHour + ':' + currentMinutes + ':' + currentSeconds;
+      } else if (
+        currentHour> 10 && currentMinutes < 10 && currentSeconds > 10 ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':0' + currentMinutes + ':' + currentSeconds;
+      } else if (
+        currentHour> 10 && currentMinutes > 10 && currentSeconds < 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':' + currentMinutes + ':0' + currentSeconds;
+      } else if (
+        currentHour< 10 && currentMinutes < 10 && currentSeconds > 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' + 
+        monthName + ' ' + currentYear + ' at 0' + currentHour + ':0' + currentMinutes + ':' + currentSeconds;
+      } else if (
+        currentHour< 10 && currentMinutes > 10 && currentSeconds < 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' + 
+        monthName + ' ' + currentYear + ' at 0' + currentHour + ':' + currentMinutes + ':0' + currentSeconds;
+      } else if (
+        currentHour> 10 && currentMinutes < 10 && currentSeconds < 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' + 
+        monthName + ' ' + currentYear + ' at ' + currentHour + ':0' + currentMinutes + ':0' + currentSeconds;
+      }
+      else {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':' + currentMinutes + ':' + currentSeconds;
+      }
+
+      submitTimeSection.textContent = submitTime;
+
+    }
+
+    let newDiv = document.createElement('div');
+    outputtedComment.prepend(newDiv);
+    newDiv.classList.add('name-plus-img');
+
+    let newDiv2 = document.createElement('div');
+    newDiv.prepend(newDiv2);
+    newDiv2.classList.add('avatar-img');
+
+    let newDiv3 = document.createElement('div');
+    avatarImg.prepend(newDiv3);
+    newDiv3.classList.add('userName');
+
+    let newDiv4 = document.createElement('div');
+    submitTimeSection.prepend(newDiv4);
+    newDiv4.classList.add('sbm-time');
+
+    //Добавляем обработчик события на форму комментрия для вызова функции commentOutput при отправке формы
+    commentForm.addEventListener("submit", commentOutput);
+  </script>
+</body>
+
+</html>

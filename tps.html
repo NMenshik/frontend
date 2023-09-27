@@ -1,191 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-      body {
-        font-family: "Roboto", sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-      #container {
-        margin: 38px;
-      }
+    body {
+      font-family: "Roboto", sans-serif;
+    }
 
-      .container--tabs {
-        list-style: none;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
+    #container {
+      margin: 38px;
+    }
 
-        .tab {
-          min-height: 2em;
-          padding: 1em;
-          box-sizing: border-box;
-          width: 80%;
-          margin: 5px;
-          text-align: center;
-          cursor: pointer;
-          background-color: black;
-          color: rgb(215, 207, 207);
-          transition: background-color 0.25s;
+    .container--tabs {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
 
-          &:hover {
-            background-color: rgba(0, 0, 0, 0.25);
-            transition: background-color 0.25s;
-            color: white;
-          }
-        }
-
-        .tabs--active {
-          background-color: #b0abab;
-          color: black;
-          pointer-events: none;
-        }
-      }
-
-      .content {
-        display: none;
-        padding: 3em;
-      }
-
-      .content--active {
-        display: block;
-      }
-
-      h1 {
-        margin-bottom: 0.5em;
-        font-weight: 700;
-      }
-
-      p {
-        font-weight: 300;
-      }
-
-      /* Кнопка выпадающего списка */
-      .dropbtn {
-        background-color: #3498db;
-        color: white;
-        padding: 16px;
-        margin-left: 10px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-      }
-
-      /* Кнопка выпадающего меню при наведении и фокусировке */
-      .dropbtn:hover,
-      .dropbtn:focus {
-        background-color: #2980b9;
-      }
-
-      /* Контейнер <div> - необходим для размещения выпадающего содержимого */
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-
-      /* Выпадающее содержимое (скрыто по умолчанию) */
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-      }
-
-      /* Ссылки внутри выпадающего списка */
-      .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
+      .tab {
+        min-height: 2em;
+        padding: 1em;
+        box-sizing: border-box;
+        width: 80%;
+        margin: 5px;
         text-align: center;
+        cursor: pointer;
+        background-color: black;
+        color: rgb(215, 207, 207);
+        transition: background-color 0.25s;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.25);
+          transition: background-color 0.25s;
+          color: white;
+        }
       }
 
-      /* Изменение цвета выпадающих ссылок при наведении курсора */
-      .dropdown-content a:hover {
-        background-color: #ddd;
+      .tabs--active {
+        background-color: #b0abab;
+        color: black;
+        pointer-events: none;
       }
+    }
 
-      /* Показать выпадающее меню (используйте JS, чтобы добавить этот класс .dropdown-content содержимого, когда пользователь нажимает на кнопку выпадающего списка) */
-      .show {
-        display: block;
-      }
+    .content {
+      display: none;
+      padding: 3em;
+    }
 
-      .date-button {
-        display: flex;
-        flex-direction: row;
-      }
+    .content--active {
+      display: block;
+    }
 
-      #btn-name {
-        padding-top: 14px;
-      }
-    </style>
-  </head>
-  <body id="container">
-    <nav>
-      <ul class="container--tabs">
-        <li class="tab tabs--active">Подгрузка новых отчетов</li>
-        <li class="tab">Проверка данных</li>
-        <li class="tab">Технические проверки</li>
-      </ul>
-    </nav>
+    h1 {
+      margin-bottom: 0.5em;
+      font-weight: 700;
+    }
 
-    <section>
-      <div class="container--content">
-        <div class="content content--active">
-          <div class="date-button">
-            <div id="btn-name">
-              Дата:
-            </div>
+    p {
+      font-weight: 300;
+    }
 
-            <div class="dropdown">
-              <button onclick="myFunction()" class="dropbtn">23.08.2023</button>
+    /* Контейнер <div> - необходим для размещения выпадающего содержимого */
+    #upload-date {
+      position: relative;
+      display: inline-block;
+      background-color: #b0abab;
+      color: black;
+      font-size: 15px;
+      padding: 15px;
+      border: none;
+      outline: none;
+      border-radius: 7px;
+      width: 144px;
+    }
 
-              <div id="myDropdown" class="dropdown-content">
-                <p id="option1">Время1</p>
-                <p id="option2">Время1</p>
-                <p id="option3">Время2</p>
-                <p id="option4">Время2</p>
-                <p id="option5">Время2</p>
-                <p id="option6">Время2</p>
-                <p id="option7">Время2</p>
-                <p id="option8">Время2</p>
-                <p id="option9">Время2</p>
-                <p id="option10">Время2</p>
-              </div>
-            </div>
-          </div>
+    #upload-date:hover,
+    #query-btn:hover {
+      background-color: rgba(60, 120, 240, 0.25);
+      transition: background-color 0.25s;
+    }
+
+    /*::webkit-calendar-picker-indicator {
+      background-color: white;
+      padding: 5px;
+      cursor: pointer;
+      border-radius: 3px;
+    }*/
+
+    .date-picker {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #picker-name {
+      padding-top: 15px;
+      font-size: 100%;
+      margin-right: 10px;
+    }
+
+    th,
+    td,
+    .report-table-form {
+      border: 1px solid #000;
+    }
+
+    .report-table-form {
+      padding-top: 15px;
+      padding-bottom: auto;
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-top: 25px;
+    }
+
+    .warning-text {
+      text-align: center;
+    }
+
+    .yellow_column {
+      background-color: rgb(228, 254, 36);
+    }
+
+    .green_column {
+      background-color: #14fc37;
+    }
+
+    #query-btn {
+      width: 105px;
+      height: 20px;
+      background-color: #b0abab;
+    }
+
+    #button-cell,
+    #query-btn {
+      border: none;
+    }
+
+    #second-tab {
+      padding-top: 20px;
+    }
+
+    .checking-links {
+      display: grid;
+      grid-template-columns: 65% 10%;
+    }
+
+    .svg-img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .checking-links {
+      align-items: center;
+    }
+
+    .svg-img:hover {
+      background-color: #b0abab;
+      transition: background-color 0.25s;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body id="container">
+  <nav>
+    <ul class="container--tabs">
+      <li class="tab tabs--active">Подгрузка новых отчетов</li>
+      <li class="tab">Проверка данных</li>
+      <li class="tab">Технические проверки</li>
+    </ul>
+  </nav>
+
+  <div class="container--content">
+    <div class="content content--active">
+      <div class="date-picker">
+        <div id="picker-name">
+          Дата:
         </div>
         <div>
-            <select> Дата:
-                <option>Что-то</option>
-            </select>
-        </div>
-        <div class="content">
-          <h1>This is tab 2</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-            doloribus necessitatibus possimus. Sapiente aspernatur neque atque
-            in eum tenetur id!
-          </p>
-        </div>
-        <div class="content">
-          <h1>This is tab 3</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam
-            esse voluptas minus autem, veniam dolor, debitis consequuntur
-            dignissimos libero quibusdam consequatur. Enim, pariatur deserunt.
-            Officiis!
-          </p>
+          <input type="date" id="upload-date"> </input>
         </div>
       </div>
-    </section>
+
+      <div class="report-table-form">
+        <table>
+          <tr>
+            <th>Sector</th>
+            <th>Period</th>
+            <th>DistrID</th>
+            <th>Qty</th>
+            <th>Data</th>
+            <th>New uploading</th>
+            <th>Загружено в ТПС</th>
+            <th>Qty in TPS_MSC</th>
+            <th>Есть ли эти данные в RUBI</th>
+            <th>Qty in RUBI</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Да/нет</td>
+            <td></td>
+            <td>Да/нет</td>
+            <td></td>
+          </tr>
+        </table>
+
+        <div class="warning-block">
+          <h1 class="warning-text">Данные для выгрузки отсутствуют!</h1>
+        </div>
+      </div>
+    </div>
+    <div class="content" id="second-tab">
+      <div class="report-table-form">
+        <table>
+          <tr>
+            <th>Sector</th>
+            <th>Period</th>
+            <th>DistrID</th>
+            <th class="yellow_column">Qty(RuBi)</th>
+            <th class="green_column">Ammount</th>
+            <th class="yellow_column">Qty(MSC)</th>
+            <th class="green_column">Ammount</th>
+            <th class="yellow_column">Qty(MSC)</th>
+            <th class="green_column">Ammount</th>
+            <th class="yellow_column">MCS_Output</th>
+            <th class="yellow_column">Действия</th>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td id="button-cell"><button id="query-btn">Уточнение</button></td>
+          </tr>
+        </table>
+
+        <div class="warning-block">
+          <h1 class="warning-text">Данные для выгрузки отсутствуют!</h1>
+        </div>
+
+      </div>
+    </div>
+    <div class="content">
+      <div class="checking-links">
+        <p>1. Проверка, что у чистых продаж нет переносов</p>
+        <a href="" class="arrow-link"><img src="Arrow--NicholasJudy456.svg" alt="Кнопка для перехода"
+            class="svg-img"></a>
+
+
+      </div>
+      <div class="checking-links">
+        <p>2. Проверка, что количество по модулю в оригинальных, в дубликатах (с отрицательным количеством) и переносах
+          в рамках сектора и дистра совпадают</p>
+        <a href="" class="arrow-link"><img src="Arrow--NicholasJudy456.svg" alt="Кнопка для перехода"
+            class="svg-img"></a>
+      </div>
+      <div class="checking-links">
+        <p>3. Проверка, что max upload date в RUBI совпадает с max upload date в MSC</p>
+        <a href="" class="arrow-link"><img src="Arrow--NicholasJudy456.svg" alt="Кнопка для перехода"
+            class="svg-img"></a>
+      </div>
+    </div>
+
 
     <script>
       const tabs = document.querySelectorAll(".tab");
@@ -204,45 +296,88 @@
         });
       }
 
-      /* Когда пользователь нажимает на кнопку,
-переключение между скрытием и отображением раскрывающегося содержимого */
-      function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+      const currentDate = new Date();
+      const uploadDate = document.querySelector('#upload-date');
+
+      //Функция для динамического изменения атрибутов инпута
+      function minMaxDate() {
+        const formatedCurrentDate = new Date(currentDate);
+        //форматируем дату так, чтобы она была в формате, читаемом атрибутом min или max
+        const currentYear = formatedCurrentDate.getFullYear();
+        const currentMonth = formatedCurrentDate.getMonth();
+        const currentDay = formatedCurrentDate.getDate();
+
+
+        let attributedCurrentDate; //переменная для записывания атрибута max
+        //условия, чтобы был нолик для корректного формата даты
+        if (currentMonth < 10 && currentDay >= 10) {
+          attributedCurrentDate =
+            currentYear + "-0" + (currentMonth + 1) + "-" + currentDay;
+        } else if (currentDay < 10 && currentMonth >= 10) {
+          attributedCurrentDate =
+            currentYear + "-" + (currentMonth + 1) + "-0" + currentDay;
+        } else if (currentMonth < 10 && currentDay < 10) {
+          attributedCurrentDate =
+            currentYear + "-0" + (currentMonth + 1) + "-0" + currentDay;
+        } else {
+          attributedCurrentDate =
+            currentYear + "-" + (currentMonth + 1) + "-" + currentDay;
+        };
+
+        uploadDate.setAttribute('max', attributedCurrentDate); //присвоение атрибута max
+        console.log(currentDay);
+
+        let attributedPreviousDate; //переменная для записывания атрибута min
+        let pastDate = new Date(currentDate - 864000000);
+        let pastDay = pastDate.getDate();
+        let pastMonth = pastDate.getMonth();
+        let pastYear = pastDate.getFullYear();
+        console.log(pastDate);
+        if (pastMonth < 10 && pastDay >= 10) {
+          attributedPreviousDate =
+            pastYear + "-0" + (pastMonth + 1) + "-" + pastDay;
+        } else if (pastDate < 10 && pastMonth >= 10) {
+          attributedPreviousDate =
+            pastYear + "-" + (pastMonth + 1) + "-0" + pastDay;
+        } else if (pastMonth < 10 && pastDay < 10) {
+          attributedPreviousDate =
+            pastYear + "-0" + (pastMonth + 1) + "-0" + pastDay;
+        } else {
+          attributedPreviousDate =
+            pastYear + "-" + (pastMonth + 1) + "-" + pastDay;
+        };
+        uploadDate.setAttribute('min', attributedPreviousDate); //присвоение атрибута min
+
+        let
+          defaultDate; //переменная для записывания атрибута value, которое по умолчанию будет устанавливать вчерашний день
+        let yesterdayDate = new Date(currentDate - 86400000);
+        let yesterdayDay = yesterdayDate.getDate();
+        let yesterdayMonth = yesterdayDate.getMonth();
+        let yesterdayYear = yesterdayDate.getFullYear();
+        if (yesterdayMonth < 10 && yesterdayDay >= 10) {
+          defaultDate =
+            yesterdayYear + "-0" + (yesterdayMonth + 1) + "-" + yesterdayDay;
+        } else if (yesterdayDay < 10 && yesterdayMonth >= 10) {
+          defaultDate =
+            yesterdayYear + "-" + (yesterdayMonth + 1) + "-0" + yesterdayDay;
+        } else if (yesterdayMonth < 10 && yesterdayDay < 10) {
+          defaultDate =
+            yesterdayYear + "-0" + (yesterdayMonth + 1) + "-0" + yesterdayDay;
+        } else {
+          defaultDate =
+            yesterdayYear + "-" + (yesterdayMonth + 1) + "-" + yesterdayDay;
+        };
+        uploadDate.setAttribute('value', defaultDate);
+
       }
 
-      // Закройте выпадающее меню, если пользователь щелкает за его пределами
-      window.onclick = function (event) {
-        if (!event.target.matches(".dropbtn")) {
-          let dropdowns = document.getElementsByClassName("dropdown-content");
-          let i;
-          for (i = 0; i < dropdowns.length; i++) {
-            let openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains("show")) {
-              openDropdown.classList.remove("show");
-            }
-          }
-        }
-      };
+      minMaxDate();
 
-      let currentdate = new Date();
-        let dateTime =
-          (currentdate.getDate()-1 )+
-          "." +
-          (currentdate.getMonth() + 1) +
-          "." +
-          currentdate.getFullYear();
-
-        function currentDate() {
-            let dateButton = document.querySelector('.dropbtn');
-            dateButton.textContent = dateTime;
-        }
-/* let today = (currentdate.getDate()-1 );
-for (let ) {
-if 
-}
-*/
-        currentDate();
-      console.log(dateTime);
+      td = document.querySelectorAll('td');
+      td.forEach(function (td) {
+        td.style.width = '105px';
+      });
     </script>
-  </body>
+</body>
+
 </html>

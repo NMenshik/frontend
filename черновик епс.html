@@ -1,0 +1,35 @@
+<div class="upload-date">
+              <button onclick="myFunction()" class="dropbtn">23.08.2023</button>
+
+              <div id="myDropdown" class="dropdown-content">
+                <p id="option1">Время1</p>
+                <p id="option2">Время1</p>
+                <p id="option3">Время2</p>
+                <p id="option4">Время2</p>
+                <p id="option5">Время2</p>
+                <p id="option6">Время2</p>
+                <p id="option7">Время2</p>
+                <p id="option8">Время2</p>
+                <p id="option9">Время2</p>
+                <p id="option10">Время2</p>
+              </div>
+
+              /* Когда пользователь нажимает на кнопку,
+переключение между скрытием и отображением раскрывающегося содержимого */
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+      // Закройте выпадающее меню, если пользователь щелкает за его пределами
+      window.onclick = function (event) {
+        if (!event.target.matches(".dropbtn")) {
+          let dropdowns = document.getElementsByClassName("dropdown-content");
+          let i;
+          for (i = 0; i < dropdowns.length; i++) {
+            let openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };

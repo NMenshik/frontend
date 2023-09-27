@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Дни до дня рождения</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 312px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .count-date {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+
+      #date-input {
+        width: 155px;
+      }
+
+      #count-btn {
+        margin-left: 5px;
+        background-color: aquamarine;
+        border: none;
+        border-radius: 4px;
+        width: 138px;
+        height: 34px;
+      }
+
+      #validation-text {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Дни до дня рождения</h1>
+    <div class="count-date">
+      <input type="date" id="date-input" min="" />
+      <button id="count-btn">Посчитать</button>
+    </div>
+
+    <div id="validation-text"></div>
+    <div id="result"></div>
+
+    <script>
+      //создаем переменные, соответствующие элементам DOM
+      let dateInput = document.querySelector("#date-input");
+      let countBtn = document.querySelector("#count-btn");
+      let validationText = document.querySelector("#validation-text");
+      let result = document.querySelector("#result");
+      let currentDate = Date.now();
+
+      //функция, чтобы пользователь не мог выбрать прошедшую дату
+      function minDate() {
+        let formatedCurrentDate = new Date(currentDate);
+        //форматируем дату так, чтобы она была в формате, читаемом атрибутом min
+        let currentYear = formatedCurrentDate.getFullYear();
+        let currentMonth = formatedCurrentDate.getMonth();
+        let currentDay = formatedCurrentDate.getDate();
+        let attributedCurrentDate;
+        /*по умолчанию предыдущие переменные 
+        для месяца и дня выдадут не 09, а 9, ниже условия, чтобы этот нолик 
+        был при необходимости*/
+        if (currentMonth < 10 && currentDay >= 10) {
+          attributedCurrentDate =
+            currentYear + "-0" + (currentMonth + 1) + "-" + currentDay;
+        } else if (currentDay < 10 && currentMonth >= 10) {
+          attributedCurrentDate =
+            currentYear + "-" + (currentMonth + 1) + "-0" + currentDay;
+        } else if (currentMonth < 10 && currentDay < 10) {
+          attributedCurrentDate =
+            currentYear + "-0" + (currentMonth + 1) + "-0" + currentDay;
+        } else {
+          attributedCurrentDate =
+            currentYear + "-" + (currentMonth + 1) + "-" + currentDay;
+        }
+        dateInput.setAttribute("min", attributedCurrentDate);
+      }
+
+      minDate();
+
+      //функция для вывода теста и даты с обработчиком
+      countBtn.addEventListener("click", function () {
+        //условие для вывода текста ошибки, если дата не указана
+        if (dateInput.value == "") {
+          validationText.textContent = "Пожалуйста, введите дату рождения";
+          result.textContent = "";
+        } else {
+          /*если дата указана, ошибка убирается и производится подсчет 
+          (если в else оставить только первую строчку, а основную функцию 
+          вынести за условие, то при нажатии кнопки без даты выводится и ошибка, 
+          и текст с отстатком дней, но с NaN конечно)*/
+          validationText.textContent = "";
+          let diffInMilliseconds = dateInput.valueAsNumber - currentDate;
+          let days = Math.ceil(Math.abs(diffInMilliseconds / 86400000));
+          
+          //условия для изменения окончания в слове "день"
+          if (days >= 11 && days <= 14) {
+            result.textContent =
+              "До вашего дня рождения осталось: " + days + " дней";
+          } else if (days % 10 === 1) {
+            result.textContent =
+              "До вашего дня рождения осталось: " + days + " день";
+          } else if (days % 10 >= 2 && days % 10 <= 4) {
+            result.textContent =
+              "До вашего дня рождения осталось: " + days + " дня";
+          } else {
+            result.textContent =
+              "До вашего дня рождения осталось: " + days + " дней";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

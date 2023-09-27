@@ -1,73 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Чат</title>
-    <style>
-      .heading {
-        font-weight: 700;
-        color: rgb(88, 88, 247);
-        font-size: larger;
-      }
-      .name,
-      .avatar-link {
-        height: 32px;
-        width: 249px;
-      }
-      .comment-section {
-        height: 32px;
-        width: 249px;
-        margin-bottom: 5px;
-      }
-      #sbm-btn {
-        height: 43px;
-        width: 164px;
-        background-color: rgb(53, 210, 238);
-        border-radius: 10px;
-        border-style: none;
-      }
 
-      .bold-font {
-        font-weight: bold;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Чат</title>
+  <style>
+    .heading {
+      font-weight: 700;
+      color: rgb(88, 88, 247);
+      font-size: larger;
+    }
 
-      .input-comment {
-        width: 300px;
-        margin-right: 79px;
-      }
+    .name,
+    .avatar-link {
+      height: 32px;
+      width: 249px;
+    }
 
-      #avatar-img {
-        width: 20%;
-        height: 35%;
-        margin-right: 10px;
-      }
+    .comment-section {
+      height: 32px;
+      width: 249px;
+      margin-bottom: 5px;
+    }
 
-      body,
-      #name-plus-img {
-        display: flex;
-        flex-direction: row;
-      }
+    #sbm-btn {
+      height: 43px;
+      width: 164px;
+      background-color: rgb(53, 210, 238);
+      border-radius: 10px;
+      border-style: none;
+    }
 
-      #userName {
-        font-weight: 700;
-        color: rgb(88, 88, 247);
-      }
+    .bold-font {
+      font-weight: bold;
+    }
 
-      #show-name {
-        margin-top: 9px;
-        margin-bottom: 9px;
-      }
-    </style>
-  </head>
-  <body>
-    <form id="commentForm">
+    .input-comment {
+      width: 300px;
+      margin-right: 79px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .output-comment {
+      width: 40%;
+      margin-bottom: 20px;
+    }
+
+    .name-plus-img {
+      display: grid;
+      grid-template-columns: 1fr 1fr 3fr;
+      column-gap: 10px;
+    }
+
+    .userName,
+    .sbm-time {
+      font-weight: 700;
+      color: rgb(88, 88, 247);
+    }
+
+    .sbm-time {
+      text-align: end;
+    }
+
+    .show-name {
+      margin-top: 9px;
+      margin-bottom: 9px;
+    }
+
+    #validation-text {
+      color: red;
+      margin-top: 15px;
+    }
+
+    .output-container {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <form id="commentForm">
     <div class="input-comment">
       <div class="heading">Оставьте ваш комментарий</div>
       <form id="show-name">
         <label for="radio">Показывать ваше имя?</label>
         <input type="radio" checked="checked" id="checkYes" name="radio" /> Да
-        <input type="radio" id="checkNo" name="radio" onclick="showName()" />
+        <input type="radio" id="checkNo" name="radio" />
         Нет
       </form>
       <div id="name-input">
@@ -79,55 +107,128 @@
       <div>Оставьте комментарий</div>
       <input class="comment-section" type="text" />
       <div>
-        <button type="submit" id="sbm-btn" >
+        <button type="submit" id="sbm-btn">
           Отправить
         </button>
       </div>
+
+      <div id="validation-text"></div>
     </div>
-    </form>
-    <div class="output-comment">
-      <div class="heading">Чат</div>
+  </form>
+  <div class="full-output-container">
+  <div class="heading">Чат</div>
+  <div class="output-comment">
+  </div>
+  </div>
 
-      <div id="name-plus-img">
-       <div id="avatar-img"> </div>
-        <div id="userName"></div>
-        <div id="sbm-time"></div>
-      </div>
-      <div id="edited-comment"></div>
-    </div>
+  <script>
+    //Берем элементы из разметки
+    const commentForm = document.querySelector("#commentForm");
+    const avatarLinkInput = document.querySelector(".avatar-link");
+    const userNameInput = document.querySelector(".name");
+    const commentSection = document.querySelector(".comment-section");
+    const validationText = document.querySelector("#validation-text");
+    let outputtedComment = document.querySelector('.output-comment');
 
-    <script>
-      //Берем элементы из разметки
-      const commentForm = document.querySelector("#commentForm");
-      const avatarLinkInput = document.querySelector(".avatar-link");
-      const userNameInput = document.querySelector(".name");
-      const commentSection = document.querySelector(".comment-section");
-      const avatarImg = document.querySelector("#avatar-img");
-      const userNameElement = document.querySelector("#userName");
-      const editedCommentElement = document.querySelector("#edited-comment");
+    //let date = new Date().toUTCString();
+    //console.log(date); - тут узнала, что могла бы и не делать целую простыню ниже по форматированию времени
 
-      //Функция для показа поля ввода имени, если выбран вариант да
-      document.querySelector('#checkYes').addEventListener('click', (showInput)=> {
-        document.getElementById("name-input").style.display = "block";
-      });
 
-      //Функция для скрытия поля ввода имени, если выбран вариант нет 
-      document.querySelector('#checkNo').addEventListener('click', (hideInput)=> {
-        document.getElementById("name-input").style.display = "none";
-      });
+    //Функция для показа поля ввода имени, если выбран вариант да
+    document.querySelector('#checkYes').addEventListener('click', (showInput) => {
+      document.getElementById("name-input").style.display = "block";
+    });
 
-      //Функция для обработки отправки комментария
-      function commentOutput(e) {
-        e.preventDefault(); //Предотвращаем перезагрузку страницы по умолчанию
+    //Функция для скрытия поля ввода имени, если выбран вариант нет
+    document.querySelector('#checkNo').addEventListener('click', (hideInput) => {
+      document.getElementById("name-input").style.display = "none";
+    });
 
-        //Получаем значение полей из ввода
+    //Функция для обработки отправки комментария
+    function commentOutput(e) {
+      e.preventDefault(); //Предотвращаем перезагрузку страницы по умолчанию
 
-        let avatarLink = avatarLinkInput.value;
-        let userName = userNameInput.value;
-        let comment = commentSection.value;
+      //Получаем значение полей из ввода
+      let avatarLink = avatarLinkInput.value;
+      let comment = commentSection.value;
 
+      //Создаем элементы, в которые потом засунем введенные данные (не разобралась как сделать вывод сообщений снизу вверх - подскажи, пожалуйста))
+      let outputContainer = document.createElement('div');
+      outputtedComment.prepend(outputContainer);
+      outputContainer.classList.add('output-container');
+      
+      let output = document.createElement('div');
+      outputContainer.append(output);
+      output.classList.add('name-plus-img');
+
+      let avatarImg = document.createElement('div');
+      output.append(avatarImg);
+      avatarImg.classList.add('avatar-img');
+
+      let userNameElement = document.createElement('div');
+      avatarImg.after(userNameElement);
+      userNameElement.classList.add('userName');
+
+      let submitTimeSection = document.createElement('div');
+      userNameElement.after(submitTimeSection);
+      submitTimeSection.classList.add('sbm-time');
+
+      let editedCommentElement = document.createElement('div');
+      outputContainer.append(editedCommentElement);
+      editedCommentElement.classList.add('edited-comment');
+      
+
+      //условие для вывода текста валидации, если коммент не введен
+      if (commentSection.value === '') {
+        validationText.textContent = "Необходимо ввести комментарий!";
+        submitTime = '';
+        userNameElement.textContent = '';
+        avatarImg = '';
+      } else {
+        validationText.textContent = '';
+      }
+      
+      //создание тега img внутри дива, чтобы засунуть туда картинку
+      let outputtedImg = document.createElement('img');
+      avatarImg.append(outputtedImg);
+
+      //условие для вывода одной из 5 картинок, если пользователь не ввел ссылку на аватар
+      if (avatarLink === '') {
+
+        const randomNumber = Math.round(Math.random() * 5);
+
+        switch (randomNumber) {
+          case 1:
+            outputtedImg.setAttribute('src',
+              'https://zamanilka.ru/wp-content/uploads/2023/09/ava-leopard-220923-1-1024x1024.jpg');
+            break;
+          case 2:
+            outputtedImg.setAttribute('src',
+              'https://zamanilka.ru/wp-content/uploads/2023/09/ava-medved-220923-1-1024x1024.jpg');
+            break;
+          case 3:
+            outputtedImg.setAttribute('src',
+              'https://zamanilka.ru/wp-content/uploads/2023/09/ava-lion-020923-2-1024x1024.jpg');
+            break;
+          case 4:
+            outputtedImg.setAttribute('src',
+              'https://zamanilka.ru/wp-content/uploads/2023/07/ava-dog-160723-1-1024x1024.jpg');
+            break;
+          case 5:
+            outputtedImg.setAttribute('src',
+              'https://zamanilka.ru/wp-content/uploads/2023/05/ava-cat-180523-2-4k-1024x1024.jpg');
+            break;
+        }
+      } else {
+        outputtedImg.setAttribute('src', avatarLink);
+      }
+
+      //условие для вывода и преобразования имени
+      if (userNameInput.value === '') {
+        userNameElement.textContent = 'Username';
+      } else {
         //Разделяем имя на отдельные слова
-        let nameParts = userName.split(" ");
+        let nameParts = userNameInput.value.split(" ");
 
         //Преобразуем каждое слово так, чтобы оно начиналось с заглавной буквы, а остальные были строчные
         let finalNameParts = nameParts.map((word) => {
@@ -137,30 +238,94 @@
         //Объединяем слова обратно с правильным имененм пользователя
         let finalRightUserName = finalNameParts.join(" ");
 
-        //Заменяем запрещенные слова
-        const wordReplace = comment.replace(/viagra|XXX/gi, "***");
-
         //Устанавливаем текст элемента для имени пользователя
         userNameElement.textContent = finalRightUserName;
-        
-
-        //Добавляем тег img в div
-        console.log(avatarImg.innerHTML);
-        avatarImg.innerHTML = '<img i=\'avatar-img\' >';
-
-        //Устанавливаем источник изображения для аватара
-        avatarImg.setAttribute("src", avatarLinkInput);
-
-        //Устанавливаем текст элемента для отредактированного комментария
-        editedCommentElement.textContent = wordReplace;
       }
 
-      //Добавляем обработчик события на форму комментрия для вызова функции commentOutput при отправке формы
-      commentForm.addEventListener("submit", commentOutput);
+      //Заменяем запрещенные слова
+      const wordReplace = comment.replace(/viagra|XXX/gi, "***");
 
-      
+      //Устанавливаем текст элемента для отредактированного комментария
+      editedCommentElement.textContent = wordReplace;
 
-    
-    </script>
-  </body>
+
+      //Условие для отображения корректного времени отправления комментария
+      let currentDate = new Date();
+      let dayNumber = currentDate.getDay();
+      console.log(dayNumber);
+      let weekDayName =
+        (dayNumber === 0) ? 'Sun' :
+        (dayNumber === 1) ? 'Mon' :
+        (dayNumber === 2) ? 'Tue' :
+        (dayNumber === 3) ? 'Wed' :
+        (dayNumber === 4) ? 'Thu' :
+        (dayNumber === 5) ? 'Fr' :
+        (dayNumber === 6) ? 'Sat' : false;
+
+
+      let currentDay = currentDate.getDate();
+      console.log(currentDay);
+
+      let monthNumber = currentDate.getMonth();
+      let monthName =
+        (monthNumber === 0) ? 'Jan' :
+        (monthNumber === 1) ? 'Feb' :
+        (monthNumber === 2) ? 'March' :
+        (monthNumber === 3) ? 'April' :
+        (monthNumber === 4) ? 'May' :
+        (monthNumber === 5) ? 'Jun' :
+        (monthNumber === 6) ? 'Jul' :
+        (monthNumber === 7) ? 'Aug' :
+        (monthNumber === 8) ? 'Sep' :
+        (monthNumber === 9) ? 'Oct' :
+        (monthNumber === 10) ? 'Nov' :
+        (monthNumber === 11) ? 'Dec' : false;
+
+      let currentYear = currentDate.getFullYear();
+      let currentHour = currentDate.getHours();
+      let currentMinutes = currentDate.getMinutes();
+      let currentSeconds = currentDate.getSeconds();
+
+      let submitTime;
+      if (currentHour < 10 && currentMinutes > 10 && currentSeconds > 10) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at 0' + currentHour + ':' + currentMinutes + ':' + currentSeconds;
+      } else if (
+        currentHour > 10 && currentMinutes < 10 && currentSeconds > 10) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':0' + currentMinutes + ':' + currentSeconds;
+      } else if (
+        currentHour > 10 && currentMinutes > 10 && currentSeconds < 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':' + currentMinutes + ':0' + currentSeconds;
+      } else if (
+        currentHour < 10 && currentMinutes < 10 && currentSeconds > 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at 0' + currentHour + ':0' + currentMinutes + ':' + currentSeconds;
+      } else if (
+        currentHour < 10 && currentMinutes > 10 && currentSeconds < 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at 0' + currentHour + ':' + currentMinutes + ':0' + currentSeconds;
+      } else if (
+        currentHour > 10 && currentMinutes < 10 && currentSeconds < 10
+      ) {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':0' + currentMinutes + ':0' + currentSeconds;
+      } else {
+        submitTime = weekDayName + ', ' + currentDay + ' ' +
+          monthName + ' ' + currentYear + ' at ' + currentHour + ':' + currentMinutes + ':' + currentSeconds;
+      }
+
+      submitTimeSection.textContent = submitTime;
+
+    }
+
+    //Добавляем обработчик события на форму комментрия для вызова функции commentOutput при отправке формы
+    commentForm.addEventListener("submit", commentOutput);
+  </script>
+</body>
+
 </html>
